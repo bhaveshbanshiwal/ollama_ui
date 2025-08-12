@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Babl-AI Chat</title>
+    <link rel="stylesheet" href="design.css">
+    <script>
+        // Function to add message to the chat box
+        function appendMessage(content, sender) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('message', sender + '-message');
+            messageElement.textContent = content;
+            document.getElementById('chat-box').appendChild(messageElement);
+            document.getElementById('chat-box').scrollTop = document.getElementById('chat-box').scrollHeight; // Scroll to the latest message
+        }
+
+        // Function to handle sending message
+        document.getElementById('send-button').addEventListener('click', () => {
+            const userInput = document.getElementById('user-input').value.trim();
+
+            if (userInput !== '') {
+                appendMessage(userInput, 'user'); // Show user's message
+                document.getElementById('user-input').value = ''; // Clear input field
+                
+                // Simulate a response from the bot
+                setTimeout(() => {
+                    const botResponse = generateResponse(userInput);
+                    appendMessage(botResponse, 'bot'); // Show bot's response
+                }, 1000); // Simulate a slight delay in bot's reply
+            }
+        });
+
+        // Generate bot response (this is a simple placeholder, you can replace this logic)
+        function generateResponse(input) {
+            if (input.toLowerCase().includes("hello")) {
+                return "Hello! How can I assist you today?";
+            } else if (input.toLowerCase().includes("course")) {
+                return "You can check course details on the department website.";
+            } else if (input.toLowerCase().includes("hostel")) {
+                return "The hostel facilities are located in the North Campus. Would you like more details?";
+            } else if (input.toLowerCase().includes("events")) {
+                return "The next campus event is a guest lecture on AI, happening on January 15th.";
+            } else {
+                return "Sorry, I didn't quite understand that. Can you ask something else?";
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column; /* Align elements vertically */
+        }
+
+        #title-main-1 {
+            position: fixed;
+            top: 10px; /* 10px from the top */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 5rem; /* Larger font size for the title */
+            font-weight: bold;
+            padding: 10px;
+            font-family: 'Times New Roman', Times, serif;
+            z-index: 10; /* Ensure the title stays on top of other elements */
+        }
+
+        .chat-container {
+            background-color: white;
+            width: 100%;
+            max-width: 1000px;
+            height: 680px;
+            display: flex;
+            flex-direction: column;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 80px; /* Add space for the fixed title */
+        }
+        .chat-box {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            border-bottom: 1px solid #ddd;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-size: larger;
+        }
+        .input-container {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+        .input-container input {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 25px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+        }
+        .input-container button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 25px;
+        }
+        .input-container button:hover {
+            background-color: #45a049;
+        }
+        .message {
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .user-message {
+            background-color: #e1f5fe;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background-color: #f1f1f1;
+            align-self: flex-start;
+        }
+        form {
+            justify-content: center;
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+        }
+        .input-container-2 {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+        }
+        .input-container-2 input {
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 25px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+        }
+        .input-container-2 button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 25px;
+        }
+        .input-container-2 button:hover {
+            background-color: #45a049;
+        }
+        #csesearch {
+            padding-left: 10px;
+            padding-right: 0px;
+            font-size: 26px;  
+        }
+        .system-message {
+            word-wrap: normal;
+            overflow-wrap: normal;
+            white-space: pre-wrap;
+            max-width: 100%;
+            background-color: burlywood;
+        }
+        .user-message {
+            word-wrap: normal;
+            overflow-wrap: normal;
+            white-space: pre-wrap;
+            max-width: 100%;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <!--<h1 id="title-main-1">
+        Babl-AI
+    </h1>-->
+    <script async src="https://cse.google.com/cse.js?cx=55c1d9d645c244a72">
+    </script>
+
+    <div class="chat-container">
+        <pre class="chat-box" id="chat-box">
+            {% for code in history %}
+                {% if 'System : ' in code %}
+                    <pre class="system-message">{{ code }}</pre>
+                {% else %}
+                    <pre class="user-message">You : {{ code }}</pre>
+                {% endif %}
+            {% endfor %}
+        <div class="gcse-searchresults"></div>
+        </pre>
+    </div>
+    
+    <div>
+        <form class="input-container" action="text-response" method="POST">
+            <input type="text" id="user-input" placeholder="Ask me anything...", name="user-input">
+            <button id="send-button"  type="submit">Send</button>
+        </form>
+        <form action="/image-response" method="POST" enctype="multipart/form-data", class="input-container-2">
+            <input type="file" id="file" name="file" required>
+            <button type="submit">Image Response</button>
+            <div class="gcse-searchbox" id="csesearch"></div>
+        </form>
+    </div>
+</body>
+</html>
